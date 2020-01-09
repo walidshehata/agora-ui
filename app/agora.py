@@ -9,7 +9,7 @@ from . import db
 def http_request(url, headers={}, data=None, method='get', timeout=3, token=None, verify_ssl=False):
 
     if token:
-        headers['Authorization'] = 'JWT {}'.format(token)
+        headers['Authorization'] = 'Bearer {}'.format(token)
 
     try:
         if method.lower() == 'get':
@@ -70,7 +70,7 @@ class AuthClient(object):
             return False
 
     def get_user(self, username, jwt):
-        user_info_url = 'http://{}:{}/secure'.format(self.backend_ip, self.backend_port)
+        user_info_url = 'http://{}:{}/me'.format(self.backend_ip, self.backend_port)
         result = http_request(user_info_url, token=jwt, timeout=self.timeout)
 
         if result.status_code == 200:

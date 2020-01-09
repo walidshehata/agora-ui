@@ -6,7 +6,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'super-secret-key'
     BACKEND_IP = os.environ.get('BACKEND_IP', '127.0.0.1')
-    BACKEND_PORT = os.environ.get('BACKEND_PORT', '6000')
+    BACKEND_PORT = os.environ.get('BACKEND_PORT', '6006')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
@@ -37,8 +37,8 @@ config = {
     'default': DevelopmentConfig
 }
 
-class CONFIG(object):
-    backend_ip = '127.0.0.1'
-    backend_port = '6000'
+# class CONFIG(object):
+#     backend_ip = '127.0.0.1'
+#     backend_port = '6000'
 
 
