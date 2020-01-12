@@ -70,16 +70,16 @@ class AuthClient(object):
             return False
 
     def get_user(self, username, jwt):
-        user_info_url = 'http://{}:{}/me'.format(self.backend_ip, self.backend_port)
+        user_info_url = 'http://{}:{}/auth/me'.format(self.backend_ip, self.backend_port)
         result = http_request(user_info_url, token=jwt, timeout=self.timeout)
 
         if result.status_code == 200:
             user_info = result.json()
-            user = load_user(user_info['username'])
+            user = load_user(user_info['id'])
             if user:
                 return user
             else:
-                user = User(username=user_info['username'],
+                user = User(id=user_info['id'],
                             api_key=jwt, display_name=user_info['display_name'],
                             tenant_id=user_info['tenant_id'], tenant_uuid=user_info['tenant_uuid'])
                 db.session.add(user)

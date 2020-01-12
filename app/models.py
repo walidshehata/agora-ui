@@ -3,7 +3,7 @@ from . import db, login_manager
 
 class User(db.Model):
     __tablename__ = 'users'
-    username = db.Column(db.String(40), primary_key=True)
+    id = db.Column(db.String(40), primary_key=True)
     # first_name = db.Column(db.String(40))
     # last_name = db.Column(db.String(40))
     display_name = db.Column(db.String(60))
@@ -18,7 +18,7 @@ class User(db.Model):
             return False
 
     def get_id(self):
-        return self.username
+        return self.id
 
     def is_authenticated(self):
         if self.api_key:
@@ -32,6 +32,6 @@ class User(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.query.filter_by(username=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     return user
 
