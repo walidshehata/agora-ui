@@ -5,5 +5,5 @@ from . import dashboard
 
 @dashboard.route('/')
 @login_required
-def dashboard():
+def index():
     return render_template('dashboard/dashboard.html', html_title='Nutanix Dashboard')

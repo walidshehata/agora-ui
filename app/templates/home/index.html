@@ -1,11 +1,41 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h1>VM List</h1>
-    <ul>
-        <li>ERA1-DubaiLab</li>
-        <li>MSSQL1-DubaiLab</li>
-        <li>DC2-DubaiLab</li>
-    </ul>
+{% block sidebar %}
 {% endblock %}
 
+{% block topbar %}
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-home-image"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome to Agora</h1>
+                                </div>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Purus in massa tempor nec feugiat nisl. Sapien pellentesque habitant morbi tristique senectus et netus et. Eu augue ut lectus arcu bibendum at varius. Suspendisse faucibus interdum posuere lorem ipsum dolor sit amet consectetur. Nascetur ridiculus mus mauris vitae ultricies leo. Habitant morbi tristique senectus et netus et malesuada. Diam maecenas sed enim ut sem viverra aliquet eget sit. Tincidunt ornare massa eget egestas purus viverra. Feugiat scelerisque varius morbi enim nunc. A iaculis at erat pellentesque adipiscing commodo. A diam sollicitudin tempor id eu.</p>
+
+                                <p>Elementum facilisis leo vel fringilla est ullamcorper eget. Volutpat odio facilisis mauris sit. Cursus mattis molestie a iaculis at. Iaculis eu non diam phasellus vestibulum lorem. Nibh mauris cursus mattis molestie a iaculis at erat pellentesque. Morbi tristique senectus et netus et. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Sodales neque sodales ut etiam sit amet. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Dignissim enim sit amet venenatis urna. Eget nulla facilisi etiam dignissim diam. Tincidunt ornare massa eget egestas purus. Neque sodales ut etiam sit amet nisl purus in. Nisl purus in mollis nunc sed id semper. Fames ac turpis egestas sed tempus urna et. Porta non pulvinar neque laoreet suspendisse. Faucibus vitae aliquet nec ullamcorper. Lectus nulla at volutpat diam. Pellentesque elit eget gravida cum sociis natoque penatibus et magnis.</p>
+
+                                <hr>
+                                <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Login to Dashboard</a>
+                                <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg btn-block" role="button" aria-pressed="true">Register a new account</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

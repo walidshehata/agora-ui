@@ -10591,9 +10591,21 @@ a:focus {
 }
 
 .bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+  /*background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");*/
+  /*original photo: https://freesvg.org/blue-rocket*/
+  background: url("../img/9va-rocket-blue-and-red.svg");
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.bg-home-image {
+  /*background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");*/
+  /*original photo: https://freesvg.org/greek-parthenon-brown-model-vector-illustration*/
+  background: url("../img/Parthenon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
 }
 
 .bg-password-image {

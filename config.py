@@ -7,6 +7,9 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'super-secret-key'
     BACKEND_IP = os.environ.get('BACKEND_IP', '127.0.0.1')
     BACKEND_PORT = os.environ.get('BACKEND_PORT', '6006')
+    VERIFY_SSL = False
+    HTTPS = False
+    HTTP_TIMEOUT = 3
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod

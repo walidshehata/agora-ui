@@ -1,47 +1,13 @@
-import requests
 import logging as log
-import json
 
-from .models import User, load_user
+from .models import User
 from . import db
-
-
-def http_request(url, headers={}, data=None, method='get', timeout=3, token=None, verify_ssl=False):
-
-    if token:
-        headers['Authorization'] = 'Bearer {}'.format(token)
-
-    try:
-        if method.lower() == 'get':
-            response = requests.get(url, headers=headers, timeout=timeout)
-        elif method.lower() == 'post':
-            response = requests.post(url, data=json.dumps(data), headers=headers, timeout=timeout)
-        else:
-            response = None
-    except requests.ConnectTimeout:
-        log.error('Connection time out while connecting to {}. '
-                  'Please check connectivity with backend'.format(url))
-        return False
-    except requests.ConnectionError:
-        log.error('Connection error while connecting to {}. '
-                  'Please check connectivity with backend.'.format(url))
-        return False
-    except requests.HTTPError:
-        log.error('Connection error while connecting to {}. '
-                  'Please check connectivity with backend.'.format(url))
-        return False
-    except Exception as error:
-        log.error('An unexpected error while connecting to {} - '
-                  'Exception: {}'.format(url, error.__class__.__name__))
-        return False
-
-    return response
+from .http import http_request
 
 
 class AuthClient(object):
 
-    backend_ip = '0.0.0.0'
-    backend_port = '80'
+    config = None
 
     def __init__(self, app=None, timeout=3):
         app = app
@@ -51,15 +17,13 @@ class AuthClient(object):
             self.init_app(app)
 
     def init_app(self, app):
-        self.backend_ip = app.config['BACKEND_IP']
-        self.backend_port = app.config['BACKEND_PORT']
+        self.config = app.config
 
     def authenticate(self, username, password):
-        auth_url = 'http://{}:{}/auth'.format(self.backend_ip, self.backend_port)
-        headers = {'Content-Type': 'application/json'}
+        auth_url = 'auth/'
         data = {'username': username, 'password': password}
 
-        result = http_request(auth_url, method='post', data=data, headers=headers, timeout=self.timeout)
+        result = http_request(auth_url, method='post', data=data)
 
         if result.status_code == 200 and 'access_token' in result.json():
             data = result.json()
@@ -69,19 +33,23 @@ class AuthClient(object):
             log.info('Error authenticating user: {}, bad username or password'.format(username))
             return False
 
-    def get_user(self, username, jwt):
-        user_info_url = 'http://{}:{}/auth/me'.format(self.backend_ip, self.backend_port)
-        result = http_request(user_info_url, token=jwt, timeout=self.timeout)
+    @staticmethod
+    def get_user(username, token):
+        user_info_url = 'auth/me'
+        result = http_request(user_info_url, token=token)
 
         if result.status_code == 200:
             user_info = result.json()
-            user = load_user(user_info['id'])
+            user = User.load_user(user_info['id'])
             if user:
                 return user
             else:
                 user = User(id=user_info['id'],
-                            api_key=jwt, display_name=user_info['display_name'],
-                            tenant_id=user_info['tenant_id'], tenant_uuid=user_info['tenant_uuid'])
+                            api_key=token,
+                            display_name=user_info['display_name'],
+                            mail=user_info['mail'],
+                            company=user_info['company'],
+                            mobile=user_info['mobile'])
                 db.session.add(user)
                 db.session.commit()
                 return user
