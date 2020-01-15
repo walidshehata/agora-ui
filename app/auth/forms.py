@@ -25,7 +25,7 @@ class RegisterForm(FlaskForm):
     company = StringField('Company',
                           validators=[DataRequired(message='Company name is required'),
                                       Length(min=2, max=50, message='Company name must be between 2-50 chars'),
-                                      Regexp('^[a-zA-Z0-9 ]*$]', message='Only [a-z], [A-Z], [0-9] allowed')])
+                                      Regexp('^[a-zA-Z0-9 ]*$', message='Only [a-z], [A-Z], [0-9] allowed')])
     mobile = StringField('Mobile',
                          validators=[DataRequired(message='Mobile number is required'),
                                      Length(min=4, max=40),

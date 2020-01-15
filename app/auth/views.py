@@ -25,7 +25,8 @@ def login():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-    if request.method == 'POST' and form.validate():
+    # if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         flash('All good')
         return redirect(url_for('home.index'))
 
