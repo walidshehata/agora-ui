@@ -17,5 +17,5 @@ class RegisterForm(FlaskForm):
     mobile = StringField('Mobile', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Repeat Password', validators=[DataRequired()])
+    password_confirm = PasswordField('Repeat Password', validators=[DataRequired()])
     submit = SubmitField('Create')
