@@ -25,6 +25,13 @@ def login():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if request.method == 'POST' and form.validate():
+        flash('All good')
+        return redirect(url_for('home.index'))
+
+    if form.errors:
+        flash(form.errors, 'danger')
+
     return render_template('auth/register.html', form=form, html_title='Register')
 
 
