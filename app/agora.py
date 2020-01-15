@@ -9,9 +9,8 @@ class AuthClient(object):
 
     config = None
 
-    def __init__(self, app=None, timeout=3):
+    def __init__(self, app=None):
         app = app
-        self.timeout = timeout
 
         if app is not None:
             self.init_app(app)
