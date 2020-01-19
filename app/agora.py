@@ -9,9 +9,8 @@ class AuthClient(object):
 
     config = None
 
-    def __init__(self, app=None, timeout=3):
+    def __init__(self, app=None):
         app = app
-        self.timeout = timeout
 
         if app is not None:
             self.init_app(app)
@@ -32,6 +31,30 @@ class AuthClient(object):
         else:
             log.info('Error authenticating user: {}, bad username or password'.format(username))
             return False
+
+    @staticmethod
+    def register_customer(firstname, lastname, mail, company, mobile, username, password):
+        pass
+        register_url = 'auth/onboard'
+        data = {
+            'firstname': firstname,
+            'lastname': lastname,
+            'company': company,
+            'mail': mail,
+            'mobile': mobile,
+            'username': username,
+            'password': password
+        }
+
+        result = http_request(register_url, data=data, method='post')
+        msg = result.json().get('msg', 'Undefined error')
+
+        if result.status_code == 200:
+            log.info(f'New customer registration submitted successfully - PC task id {msg}')
+            return True, msg
+        else:
+            log.error(f'Error in registering a new customer - msg: {msg}')
+            return False, msg
 
     @staticmethod
     def get_user(username, token):

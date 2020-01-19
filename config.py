@@ -9,7 +9,7 @@ class Config:
     BACKEND_PORT = os.environ.get('BACKEND_PORT', '6006')
     VERIFY_SSL = False
     HTTPS = False
-    HTTP_TIMEOUT = 3
+    HTTP_TIMEOUT = 5
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod

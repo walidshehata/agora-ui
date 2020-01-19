@@ -19,12 +19,34 @@ def login():
             return redirect(next_url)
         else:
             flash('Sorry, something went wrong!', 'danger')
+
+    if form.errors:
+        flash(form.errors, 'danger')
+
     return render_template('auth/login.html', form=form, html_title='Login')
 
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        result, message = agora_auth.register_customer(firstname=form.firstname.data,
+                                                       lastname=form.lastname.data,
+                                                       company=form.company.data,
+                                                       mail=form.mail.data,
+                                                       mobile=form.mobile.data,
+                                                       username=form.username.data,
+                                                       password=form.password.data)
+
+        if result:
+            flash('Your account is being created, you will receive an email once activated', 'success')
+            return redirect(url_for('home.index'))
+        else:
+            flash(f'Error: {message}', 'danger')
+
+    if form.errors:
+        flash(form.errors, 'danger')
+
     return render_template('auth/register.html', form=form, html_title='Register')
 
 
